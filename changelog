@@ -1,0 +1,8 @@
+0.1a1 - Basic math flashcard questions. Score and time elapsed printed at end.
+0.1a2 - Division has been enabled. Code has been made more robust for when different types of questions will be added. Add countdown timer at start of program.
+
+Upcoming:
+-Math difficulty tracking in a userfile that can be carried forward after every update.
+-Topography questions.
+-User can choose what kind of questions he/she wants to be asked.
+-Performance tracking.

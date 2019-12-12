@@ -6,80 +6,28 @@
 #include <stdlib.h>     /* srand, rand */
 #include <time.h>       /* time */
 #include <chrono>
-#include <unistd.h>
-#include <string>
 #include <sstream>
 #include "system\terminal.cpp"
+#include "MathCard.cpp"
+#include <windows.h>
 
 using namespace std;
+string version = "0.1a1";
 
-int x,y,z,op;
-int totalQuestions,correctQuestions,highLimit,lowLimit,userAnswer;
+auto questionGen(){
+    auto question = mathQuestionGen(1);
 
-
-auto questionGen(int hL, int lL, int difficil){
-    int difficulty = difficil; //Will be used later to indicate question difficulty.
-    srand(time(NULL));//Creating randomized seed based on time.
-    op = rand() % 3 + 1;//Choosing random operator for question. Not including division right now.
-
-    //Limits but should actually be defined per operator.
-    highLimit = hL;
-    lowLimit = lL;
-
-    //Random numbers to calculate with.
-    x = rand() % (highLimit-lowLimit+1) + lowLimit;
-    y = rand() % (highLimit-lowLimit+1) + lowLimit;
-    stringstream q;
-    int a = 0;
-    if(op == 1){//Subtraction.
-        z = x-y;
-        q << "What is " << x << "-" << y << "? ";
-        a = z;
-    }else if(op == 2){//Addition.
-        z = x+y;
-        q << "What is " << x << "+" << y << "? ";
-        a = z;
-    }else if(op == 3){//Multiplication.
-        if(lowLimit == 1){
-            lowLimit = 2;
-        }
-        x = rand() % (highLimit-lowLimit+1) + lowLimit;
-        y = rand() % (highLimit-lowLimit+1) + lowLimit;
-        z = x*y;
-        q << "What is " << x << "*" << y << "? ";
-        a = z;
-    }else if(op == 4){//Division.
-        if(lowLimit == 1){
-            lowLimit = 2;
-        }
-        x = rand() % (highLimit-lowLimit+1) + lowLimit;
-        y = rand() % (highLimit-lowLimit+1) + lowLimit;
-        z = x/y;
-        q << "What is " << x << "/" << y << "? ";
-        a = z;
-    }
-
-    //Question.
-    string qu = q.str();
-
-    //Answer message.
-    stringstream answer;
-    answer << "The answer is " << a << ".\n";
-    string am = answer.str();
-
-    //Returning the question along with answer and answer message for output.
-    struct result {string vraag; int antwoord; string antwoordMessage;};
-    return result {qu, a, am};
+    return question;
 }
 
 auto flashCardQuestions(){
     //Setting question parameters.
-    totalQuestions = 20;
-    correctQuestions = 0;
+    int totalQuestions = 20;
+    int correctQuestions = 0;
     
     for(int i = 0; i < totalQuestions; i++){
         //Creating a question.
-        auto question = questionGen(10, 1, 1);
+        auto question = questionGen();
 
         //Asking the question.
         output(question.vraag);
@@ -90,7 +38,7 @@ auto flashCardQuestions(){
         //Checking if user is correct and scoring them.
         if(userAnswer == question.antwoord){
             correctQuestions++;
-        }else if(userAnswer != z){
+        }else if(userAnswer != question.antwoord){
             output(question.antwoordMessage);
         }
     }
@@ -103,14 +51,34 @@ auto flashCardQuestions(){
 void flashCardResult(int tQ, int cQ, double timeElapsed){
     //Creating the final result message.
     stringstream resultMessageS; 
-    resultMessageS << "You're score was " << correctQuestions << "/" << totalQuestions << ". You did it in " << timeElapsed << " seconds!";
+    resultMessageS << "\nYou're score was " << cQ << "/" << tQ << ". You did it in " << timeElapsed << " seconds!";
 
     //Outputting the final result.
     output(resultMessageS.str());
 }
 
+void countdown(){
+    int time = 3;
+    while (time >= 1){
+        stringstream timeLeft;
+        timeLeft << time << "\n";
+        output(timeLeft.str());
+        time--;
+        Sleep(1000);
+    }
+    output("START!\n");
+}
+
 int main()
 {   
+    //Welcome message.
+    stringstream welcomeMessage;
+    welcomeMessage << "Welcome to Flashcards v" << version << "!\n\n";
+    output(welcomeMessage.str());
+
+    //Count-down
+    countdown();
+
     //Start timer.
     auto startingTime = chrono::system_clock::now();
 
