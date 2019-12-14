@@ -1,8 +1,29 @@
-0.1a1 - Basic math flashcard questions. Score and time elapsed printed at end.
-0.1a2 - Division has been enabled. Code has been made more robust for when different types of questions will be added. Add countdown timer at start of program.
+--- 0.1 --- (Simple Math)
+--- 0.1a1 - (12 December 2019)     
+        - Basic math flashcard questions. Score and time elapsed printed at end.
+
+--- 0.1a2 - (12 December 2019)
+        - Division has been enabled. 
+        - Code has been made more robust for when different types of questions will be added. 
+        - Added countdown timer at start of program.
+
+
+--- 0.2 --- (XP System)
+--- 0.2a1 - (14 December 2019) - LATEST VERSION
+        - Added experience (XP) system that will be unique to each class of questions. For example, math XP is different than topography (not yet in the game) XP.
+        - In the new XP system, after certain amounts of XP are earned, the user levels up in that particular question category.
+        - As the user progress in XP levels for a question category, the questions become more difficult.
+
+--- 0.2a2 - (DATE) - UPCOMING VERSION
+        - XP system data is logged to an encrypted user file.
+        - User file can be migrated to later versions of the program.
+        - Time in which a question is answered plays a role in XP gained for answering the question correctly.
+
 
 Upcoming:
--Math difficulty tracking in a userfile that can be carried forward after every update.
--Topography questions.
--User can choose what kind of questions he/she wants to be asked.
--Performance tracking.
+-XP per question category is saved to user data file that can be carried across updates and multiple sessions.
+-Topography question category.
+-Language question category.
+-Biology question category.
+-User can either do a set of mixed question categories or do questions from a single category.
+-Multiple choice questions for more complicated math questions involving calculus for example.

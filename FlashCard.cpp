@@ -7,37 +7,48 @@
 #include <time.h>       /* time */
 #include <chrono>
 #include <sstream>
-#include "system\terminal.cpp"
-#include "MathCard.cpp"
+#include "system\terminal.h"
+#include "cards\MathCard.cpp"
 #include <windows.h>
+#include "system\userdata.h"
 
 using namespace std;
-string version = "0.1a1";
+user user1;
+string version = "0.2a1";
 
-auto questionGen(){
-    auto question = mathQuestionGen(1);
+auto questionGen(string questionCategory, user user1){
+    auto question = mathQuestionGen(user1);
 
     return question;
 }
 
-auto flashCardQuestions(){
+auto flashCardQuestions(user user1){
     //Setting question parameters.
-    int totalQuestions = 20;
+    int totalQuestions = 25;
     int correctQuestions = 0;
     
     for(int i = 0; i < totalQuestions; i++){
         //Creating a question.
-        auto question = questionGen();
+        auto question = questionGen("Math", user1);
 
         //Asking the question.
         output(question.vraag);
 
+        //Start timer.
+        auto startingTime = chrono::system_clock::now();
+
         //Grabbing user input.
         int userAnswer = integerInput();
+
+        //Ending timer.
+        auto endingTime = chrono::system_clock::now();
+        double timeElapsed = double(chrono::duration_cast<chrono::milliseconds>(endingTime - startingTime).count()/1000);
 
         //Checking if user is correct and scoring them.
         if(userAnswer == question.antwoord){
             correctQuestions++;
+            user1.processExperience(question.xp, question.category);
+            user1.checkUpgrade(question.category);
         }else if(userAnswer != question.antwoord){
             output(question.antwoordMessage);
         }
@@ -48,10 +59,10 @@ auto flashCardQuestions(){
     return results {totalQuestions, correctQuestions};
 }
 
-void flashCardResult(int tQ, int cQ, double timeElapsed){
+void flashCardResult(int tQ, int cQ){
     //Creating the final result message.
     stringstream resultMessageS; 
-    resultMessageS << "\nYou're score was " << cQ << "/" << tQ << ". You did it in " << timeElapsed << " seconds!";
+    resultMessageS << "\nYou're score was " << cQ << "/" << tQ << "."; //Mention how much XP was gained at the end of a round!
 
     //Outputting the final result.
     output(resultMessageS.str());
@@ -76,21 +87,17 @@ int main()
     welcomeMessage << "Welcome to Flashcards v" << version << "!\n\n";
     output(welcomeMessage.str());
 
+    //declare user
+    user1.createUser();
+
     //Count-down
     countdown();
 
-    //Start timer.
-    auto startingTime = chrono::system_clock::now();
-
     //Starting FlashCard Sequence.
-    auto results = flashCardQuestions();
-
-    //Ending timer.
-    auto endingTime = chrono::system_clock::now();
-    double timeElapsed = double(chrono::duration_cast<chrono::milliseconds>(endingTime - startingTime).count()/1000);
+    auto results = flashCardQuestions(user1);
 
     //Processing the result.
-    flashCardResult(results.tQ, results.cQ, timeElapsed);
+    flashCardResult(results.tQ, results.cQ);
 
     //Ending program.
     return 0;
