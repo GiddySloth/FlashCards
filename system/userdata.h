@@ -27,6 +27,7 @@ class user{
     void processExperience(double experience, string category){
         if(category == "Math"){
             mathUserExperience = mathUserExperience + experience;
+            //cout << "XP ADDED, NEW XP: " << mathUserExperience; 
         }
     }
     void checkUpgrade(string category){
@@ -48,7 +49,7 @@ class user{
                     break;
                 }
             }else{
-                if(mathUserExperience >= mathLevelSystem[i] && mathUserExperience < mathLevelSystem[i+1]){
+                if(mathUserExperience >= mathLevelSystem[i-1] && mathUserExperience < mathLevelSystem[i]){
                     if(mathUserLevel != i+1){
                         stringstream levelUp;
                         levelUp << "\nYou've reached Math Level " << mathUserLevel+1 << "!\n";

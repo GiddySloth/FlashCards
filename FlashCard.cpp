@@ -24,7 +24,7 @@ auto questionGen(string questionCategory, user user1){
 
 auto flashCardQuestions(user user1){
     //Setting question parameters.
-    int totalQuestions = 25;
+    int totalQuestions = 200;
     int correctQuestions = 0;
     
     for(int i = 0; i < totalQuestions; i++){

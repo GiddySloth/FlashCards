@@ -17,16 +17,16 @@ auto additionQuestion(int level){
         lowLimit = 1;
     }else if(level == 2){
         highLimit = 25;
-        lowLimit = 1;
+        lowLimit = 5;
     }else if(level == 3){
         highLimit = 50;
-        lowLimit = 1;
+        lowLimit = 5;
     }else if(level == 4){
         highLimit = 100;
-        lowLimit = 1;
+        lowLimit = 10;
     }else if(level == 5){
         highLimit = 200;
-        lowLimit = 1;
+        lowLimit = 20;
     }
     
     x = rand() % (highLimit-lowLimit+1) + lowLimit;
@@ -42,23 +42,23 @@ auto subtractionQuestion(int level){
         lowLimit = 1;
     }else if(level == 2){
         highLimit = 25;
-        lowLimit = 1;
+        lowLimit = 5;
     }else if(level == 3){
         highLimit = 50;
-        lowLimit = 1;
+        lowLimit = 5;
     }else if(level == 4){
         highLimit = 100;
-        lowLimit = 1;
+        lowLimit = 10;
     }else if(level == 5){
         highLimit = 200;
-        lowLimit = 1;
+        lowLimit = 20;
     }
     bool properSet = false;
     while (properSet == false){
         x = rand() % (highLimit-lowLimit+1) + lowLimit;
         y = rand() % (highLimit-lowLimit+1) + lowLimit;
         z = x-y;
-        if(z >= 0){
+        if(z > 0){
             properSet = true;
         }
     }
@@ -70,19 +70,19 @@ auto multiplicationQuestion(int level){
     int highLimit, lowLimit, x, y, z;
     if(level == 1){
         highLimit = 5;
-        lowLimit = 1;
+        lowLimit = 2;
     }else if(level == 2){
         highLimit = 10;
-        lowLimit = 1;
+        lowLimit = 2;
     }else if(level == 3){
         highLimit = 15;
-        lowLimit = 1;
+        lowLimit = 2;
     }else if(level == 4){
         highLimit = 20;
-        lowLimit = 1;
+        lowLimit = 2;
     }else if(level == 5){
         highLimit = 25;
-        lowLimit = 1;
+        lowLimit = 2;
     }
 
     x = rand() % (highLimit-lowLimit+1) + lowLimit;
@@ -95,19 +95,19 @@ auto divisionQuestion(int level){
     int highLimit, lowLimit, x, y, z;
     if(level == 1){
         highLimit = 10;
-        lowLimit = 1;
+        lowLimit = 2;
     }else if(level == 2){
         highLimit = 25;
-        lowLimit = 1;
+        lowLimit = 2;
     }else if(level == 3){
         highLimit = 50;
-        lowLimit = 1;
+        lowLimit = 2;
     }else if(level == 4){
         highLimit = 100;
-        lowLimit = 1;
+        lowLimit = 2;
     }else if(level == 5){
         highLimit = 200;
-        lowLimit = 1;
+        lowLimit = 2;
     }
 
     bool properSet = false;
@@ -126,7 +126,7 @@ auto divisionQuestion(int level){
 }
 
 double calculateMathExperience(int userLevel){
-    double experience = 1*pow(1.5, userLevel);
+    double experience = 1*pow(1.5, userLevel-1);
     return experience;
 }
 
@@ -135,8 +135,7 @@ auto mathQuestionGen(user user1){
     int UML = user1.getLevel("Math"); //User Math level
     double experience = calculateMathExperience(UML);
 
-    //int op = rand() % 4 + 1;//Choosing random operator for question. Not including division right now.
-    int op = 2;
+    int op = rand() % 4 + 1;//Choosing random operator for question. Not including division right now.
     //process variables
     stringstream q;
     int a;
